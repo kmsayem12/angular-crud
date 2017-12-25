@@ -1,0 +1,92 @@
+<div id="loding" [ngClass]="{ 'loding-hide': lodingImage }">
+    <img src="assets/img/loding.gif">
+</div>
+<div id="ui-view" [ngClass]="{ 'loding-ui-view': showloding }">
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-lg-12">
+				<ngb-tabset>
+					<ngb-tab title="Profile Setting">
+						<ng-template ngbTabContent>
+							<form method="post" enctype="multipart/form-data" class="form-horizontal" [formGroup]="profileAddForm">
+								<div class="col-lg-6 px-3">
+									<div class="form-group row">
+										<label for="name" class="col-5 col-form-label">Name <span>*</span> </label>
+										<div class="col-7">
+											<input class="form-control" type="text" id="name" name="name" formControlName="name" [(ngModel)]="profile.name">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="phone" class="col-5 col-form-label">Phone <span>*</span> </label>
+										<div class="col-7">
+											<input class="form-control" type="text" id="phone" name="phone" formControlName="phone" required [(ngModel)]="profile.phone">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="email" class="col-5 col-form-label">Email <span>*</span></label>
+										<div class="col-7">
+											<input class="form-control" type="text" id="email" name="email" formControlName="email" readonly [(ngModel)]="profile.email">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="address" class="col-5 col-form-label">Address <span>*</span> </label>
+										<div class="col-7">
+											<input class="form-control" type="text" id="address" name="address" formControlName="address" required [(ngModel)]="profile.address">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-md-5 form-control-label">image</label>
+										<div class="col-md-7">
+											<p><img style="height: 150px;width: 150px;" class="img-thumbnail" *ngIf="profile.image !=''" [src]="'data:image/jpg;base64,'+profile.image" /></p>
+											<div class="input-group">
+												<span class="input-group-btn">
+														<label class="btn btn-primary">
+														<samp>Browse</samp>...
+															<input type="file" accept="{{fileType}}" name="file" style="display: none;" (change)="fileChange($event)" [attr.multiple] ="allowMultiple" >
+														</label>
+													</span>
+												<input type="text" class="form-control" [value]="DisplayedText" disabled="" [class.ng-invalid-right]="required && !DisplayedText"  [class.ng-valid-right]="required && DisplayedText" style="height: 35px;">
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-info" [disabled]="!profileAddForm.valid" (click) ="UpdateProfile(this.profile)">Update Profile</button>
+								</div>
+				  			</form>
+				    	</ng-template>
+				  	</ngb-tab>
+				  	<ngb-tab title=" Change Password">
+						<ng-template ngbTabContent>
+							<form method="post" enctype="multipart/form-data" class="form-horizontal" [formGroup]="profileAddForm">
+								<div class="col-lg-6 px-3">
+									<div class="form-group row">
+										<label for="currentPassword" class="col-5 col-form-label">Current Password <span>*</span> </label>
+										<div class="col-7">
+											<input class="form-control" type="password" id="currentPassword" name="currentPassword" formControlName="currentPassword" required [(ngModel)]="password.currentPassword">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="newPassword" class="col-5 col-form-label">New Password <span>*</span> </label>
+										<div class="col-7">
+											<input class="form-control" type="password" id="newPassword" name="newPassword" formControlName="newPassword" required [(ngModel)]="password.newPassword">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="confirmPassword" class="col-5 col-form-label">Confirm Password <span>*</span></label>
+										<div class="col-7">
+											<input class="form-control" type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" required [(ngModel)]="password.confirmPassword">
+										</div>
+									</div>
+									<button type="submit" class="btn btn-info" (click) ="UpdatePassword()">Update Password</button>
+								</div>
+							</form>
+						</ng-template>
+					</ngb-tab>
+				</ngb-tabset>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

@@ -1,0 +1,138 @@
+<div id="loding" [ngClass]="{ 'loding-hide': lodingImage }">
+    <img src="assets/img/loding.gif">
+</div>
+<div id="ui-view" [ngClass]="{ 'loding-ui-view': showloding }">
+  <div class="animated fadeIn">
+      <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+                <div class="card-block">
+                  <div class="card-block-title">
+                    <h5 class="card-title">User</h5>
+                    <button id="add_btn" type="button" class="btn btn-info" (click)="open(content)" style="float: right;"> Add User</button>
+                  </div>
+                  <p><button type="button" *ngIf="pdf" class="btn btn-secondary btn-sm" title="PDF" (click)="pdfExport()"><i class="fa fa-file-pdf-o"></i> PDF</button> <button type="button" *ngIf="exl" title="XL" class="btn btn-secondary btn-sm" (click)="xlExport()"><i class="fa fa-file-excel-o"></i> Excel</button></p>
+                    <div class="table-responsive">
+                      <table id="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover" width="100%">
+                          <thead>
+                              <tr>
+                                  <th>#Sl</th>
+                                  <th>Name</th>
+                                  <th>Email</th>
+                                  <th>Phone</th>
+                                  <th>Address</th>
+                                  <th>Type</th>
+                                  <th>Status</th>
+                                  <th class="action">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                             <tr *ngFor="let item of userList; let i = index" [attr.data-index]="i">
+                                  <td>{{i+1}}</td>
+                                  <td>{{item.name}}</td>
+                                  <td>{{item.email}}</td>
+                                  <td>{{item.phone}}</td>
+                                  <td>{{item.address}}</td>
+                                  <td>{{ ((item.type==1) ? 'Admin' : 'User')}}</td>
+                                  <td><span *ngIf="item.status==1" class="badge badge-success">Active</span> <span *ngIf="item.status==0" class="badge badge-danger">Inactive</span></td>
+                                  <td class="action"><button *ngIf="item.type !=1" class="btn btn-primary btn-sm" (click)="viewUserPermission(this.userList[i].id)"><i class="fa fa-user-secret"></i> Permission</button> <button *ngIf="item.type==1" class="btn btn-danger btn-sm"><i class="fa fa-user-secret"></i> All Assing</button> <button class="btn btn-outline-danger btn-sm" (click)="delete(this.userList[i].id)">x</button> <button type="button" class="btn btn-outline-primary btn-sm" (click)="edit(this.userList[i].id,content)"><i class="fa fa-pencil fa-lg mt-1"></i></button></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <!--/.col-->
+      </div>
+  </div>
+  <!-- class="modal fade" -->
+  <ng-template #content let-c="close" let-d="dismiss" id="user-add"> 
+      <div class="modal-info" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title">{{modalTitle}}</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal" [formGroup]="userAddForm">
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label for="name" class="col-5 col-form-label">Name <span>*</span></label>
+                        <div class="col-7">
+                          <input class="form-control" type="text" id="name" name="name" formControlName="name" [(ngModel)]="user.name">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="email" class="col-5 col-form-label">Email <span>*</span></label>
+                        <div class="col-7">
+                          <input class="form-control" type="email" id="email" name="email"  formControlName="email" [(ngModel)]="user.email">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="phone" class="col-5 col-form-label">Phone <span>*</span></label>
+                        <div class="col-7">
+                          <input class="form-control" type="text" id="phone" name="phone" formControlName="phone" [(ngModel)]="user.phone">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="password" class="col-5 col-form-label">Password</label>
+                        <div class="col-7">
+                          <input class="form-control" type="password" id="password" name="password" formControlName="password" [(ngModel)]="user.password">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="address" class="col-5 col-form-label">Address</label>
+                        <div class="col-7">
+                          <textarea class="form-control" type="text" id="address" name="address" formControlName="address" [(ngModel)]="user.address"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="type" class="col-5 col-form-label">Type <span>*</span></label>
+                        <div class="col-7">
+                          <select class="form-control" id="type" name="type" formControlName="type" [(ngModel)]="user.type">
+                            <option value="" selected  disabled>Please Select</option>
+                            <option *ngFor="let item of userType" value="{{item.id}}">{{item.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="status" class="col-5 col-form-label">Status</label>
+                        <div class="col-7">
+                          <select class="form-control" id="status" name="status" formControlName="status" [(ngModel)]="user.status">
+                            <option value="0" selected>Inactive</option>
+                            <option value="1">Active</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-5 form-control-label">image</label>
+                        <div class="col-md-7">
+                          <img style="height: 100px;width: 100px;" class="img-thumbnail" *ngIf="user.image !=''" [src]="'data:image/jpg;base64,'+user.image" />
+                          <div class="input-group">
+                              <span class="input-group-btn">
+                                      <label class="btn btn-primary">
+                                        <samp>Browse</samp>...
+                                          <input type="file" accept="{{fileType}}"  style="display: none;" (change)="fileChange($event)" [attr.multiple] ="allowMultiple" >
+                                      </label>
+                                  </span>
+                              <input type="text" class="form-control" [value]="DisplayedText" disabled="" [class.ng-invalid-right]="required && !DisplayedText"  [class.ng-valid-right]="required && DisplayedText" style="height: 35px;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
+                  <button type="submit" class="btn btn-outline-primary" [disabled]="!userAddForm.valid" (click) ="save(this.user)">Save</button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</div>
+
+
+

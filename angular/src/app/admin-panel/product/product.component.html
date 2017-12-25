@@ -1,0 +1,214 @@
+<div id="loding" [ngClass]="{ 'loding-hide': lodingImage }">
+    <img src="assets/img/loding.gif">
+</div>
+<div id="ui-view" [ngClass]="{ 'loding-ui-view': showloding }">
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-block">
+						<div class="card-block-title">
+							<h5 class="card-title">Product</h5>
+							<button id="add_btn" type="button" class="btn btn-info pull-right" (click)="open(content)" style="float: right;"> 
+								Add Product
+							</button>
+						</div>
+						<p><button type="button" *ngIf="pdf" class="btn btn-secondary btn-sm" title="PDF" (click)="pdfExport()"><i class="fa fa-file-pdf-o"></i> PDF</button> <button type="button" *ngIf="exl" title="XL" class="btn btn-secondary btn-sm" (click)="xlExport()"><i class="fa fa-file-excel-o"></i> Excel</button></p>
+						<div id="table" class="table-responsive">
+							<table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover" width="100%">
+								<thead>
+									<tr>
+										<th style="width: 5%;">#Sl</th>
+										<th>Code</th>
+										<th>Name</th>
+										<th>Category</th>
+										<th style="width: 10%;">Purchase Price</th>
+										<th style="width: 10%;">Selling Price</th>
+										<th style="width: 5%;">Quantity</th>
+										<th style="width: 5%;">Status</th>
+										<th style="width: 9%;" class="action">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of productList; let i = index" [attr.data-index]="i">
+										<td>{{i+1}}</td>
+										<td>{{item.serial_number}}</td>
+										<td>{{item.name}}</td>
+										<td>{{item.categoryName}}</td>
+										<td>{{item.purchase_price}} {{setting.currency}}</td>
+										<td>{{item.selling_price}} {{setting.currency}}</td>
+										<td>{{item.stock_quantity - item.damagedQuantity}}</td>
+										<td><span *ngIf="item.status==1" class="badge badge-success">Active</span> <span *ngIf="item.status==0" class="badge badge-danger">Inactive</span></td>
+										<td class="action"><button type="button" class="btn btn-info btn-sm" (click)="openProductInfoMdal(this.productList[i].id,productinfo)"><i class="fa fa-info"></i></button> <button type="button" class="btn btn-outline-primary btn-sm" (click)="edit(this.productList[i].id,content)"><i class="fa fa-pencil fa-lg mt-1"></i></button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/.col-->
+		</div>
+	</div>
+	<ng-template #content let-c="close" let-d="dismiss" id="customer-add"> <!-- class="modal fade" -->
+		<div class="modal-info" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">{{modalTitle}}</h4>
+					<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form method="post" enctype="multipart/form-data" class="form-horizontal" [formGroup]="productAddForm" >
+						<div class="form-group row">
+							<label for="serial_number" class="col-5 col-form-label">Serial Code</label>
+							<div class="col-7">
+								<input class="form-control" type="serial_number" id="serial_number" formControlName="serial_number" readonly [(ngModel)]="product.serial_number">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="name" class="col-5 col-form-label">Name <span>*</span></label>
+							<div class="col-7">
+								<input class="form-control" type="text" id="name" name="name" formControlName="name" required [(ngModel)]="product.name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="category" class="col-5 form-control-label">Category <span>*</span></label>
+							<div class="col-7">
+								<select class="form-control" id="category" name="category"  formControlName="category" required [(ngModel)]="product.category" (ngModelChange)="selectCat($event)">
+									<option value="" selected disabled>Please Select</option>
+									<option *ngFor="let item of cat" value="{{item.id}}">{{item.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="product.category !=''">
+							<label for="subCategory" class="col-5 form-control-label">Sub Category </label>
+							<div class="col-7">
+								<select class="form-control" id="subCategory" name="subCategory"  formControlName="subCategory" [(ngModel)]="product.subCategory">
+									<option value="" selected>Please Select</option>
+									<option *ngFor="let item of subCat" value="{{item.id}}">{{item.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="purchase_price" class="col-5 col-form-label">Purchase Price <span>*</span></label>
+							<div class="col-7">
+								<input class="form-control" type="text" id="purchase_price" name="purchase_price" formControlName="purchase_price" required [(ngModel)]="product.purchase_price">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="selling_price" class="col-5 col-form-label">Selling Price <span>*</span></label>
+							<div class="col-7">
+								<input class="form-control" type="text" id="selling_price" name="selling_price" formControlName="selling_price" required [(ngModel)]="product.selling_price">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="note" class="col-5 col-form-label">Note</label>
+							<div class="col-7">
+								<textarea class="form-control" type="text" id="note" name="note" formControlName="note" [(ngModel)]="product.note"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="status" class="col-5 col-form-label">Status <span>*</span></label>
+							<div class="col-7">
+								<select class="form-control" id="status" name="status" formControlName="status" [(ngModel)]="product.status">
+									<option value="0">Inactive</option>
+									<option value="1">Active</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+	                    	<label class="col-md-5 form-control-label">image</label>
+		                    <div class="col-md-7">
+		                      <img style="height: 100px;width: 100px;" class="img-thumbnail" *ngIf="product.image !=''" [src]="'data:image/jpg;base64,'+product.image" />
+		                      <div class="input-group">
+		                          <span class="input-group-btn">
+		                                  <label class="btn btn-primary">
+		                                    <samp>Browse</samp>...
+		                                      <input type="file" accept="{{fileType}}"  style="display: none;" (change)="fileChange($event)" [attr.multiple] ="allowMultiple" >
+		                                  </label>
+		                              </span>
+		                          <input type="text" class="form-control" [value]="DisplayedText" disabled="" [class.ng-invalid-right]="required && !DisplayedText"  [class.ng-valid-right]="required && DisplayedText" style="height: 35px;">
+		                      </div>
+		                    </div>
+	                    </div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
+					<button type="submit" class="btn btn-outline-primary" [disabled]="!productAddForm.valid" (click) ="save(this.product)">Save</button>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+
+	<ng-template #productinfo let-c="close" let-d="dismiss" id="customerinfo">
+	    <div class="modal-info" role="document" >
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h4 class="modal-title">Product Information</h4>
+	                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+	                    <span aria-hidden="true">×</span>
+	                </button>
+	            </div>
+	            <div class="modal-body">
+	                <div class="row">
+	            		<div class="col-lg-12">
+		                    <table class="table table-bordered">
+		                        <tbody>
+		                            <tr>
+		                                <th>Product Code</th>
+		                                <td>{{productInfo.serial_number}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Product Name</th>
+		                                <td>{{productInfo.name}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Category</th>
+		                                <td>{{productInfo.category}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Sub Category</th>
+		                                <td>{{productInfo.subCategory}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Purchase Price</th>
+		                                <td>{{productInfo.purchase_price}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Selling Price</th>
+		                                <td>{{productInfo.selling_price}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Quantity</th>
+		                                <td>{{productInfo.stock_quantity}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Note</th>
+		                                <td>{{productInfo.note}}</td>
+		                            </tr>
+		                            <tr>
+		                                <th>Image</th>
+		                                <td><img style="height: 100px;width: 100px;" class="img-thumbnail" *ngIf="productInfo.image !=''" [src]="'data:image/jpg;base64,'+productInfo.image" /></td>
+		                            </tr>
+		                        </tbody>
+		                    </table>
+				        </div>
+	            	</div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-secondary" aria-label="Close" (click)="d('Cross click')">Close</button>
+	            </div>
+	        </div>
+	    </div>
+	</ng-template>
+</div>
+
+
+
+
+
+
+

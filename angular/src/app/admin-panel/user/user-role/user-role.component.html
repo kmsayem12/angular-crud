@@ -1,0 +1,36 @@
+<div id="loding" [ngClass]="{ 'loding-hide': lodingImage }">
+    <img src="assets/img/loding.gif">
+</div>
+<div id="ui-view" [ngClass]="{ 'loding-ui-view': showloding }">
+  <div class="animated fadeIn">
+      <div class="row">
+          <div class="col-lg-7" style="margin: 0 auto;">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title" style="display: inline-block;">User Role </h5> {{userName}} - <span class="badge badge-success">{{ ((userType==1) ? 'Admin' : 'User')}}</span>
+                    <div class="table-responsive" style="height: 402px;overflow-y: scroll;">
+                      <table class="table table-bordered table-sm">
+                        <tbody *ngFor="let item of menuList; let i =index" [attr.data-index]="i">
+                          <tr class="menu-tr">
+                              <td> <input id="menu-{{item.id}}" class="menu" (click)="selectMenu($event);" type="checkbox" value="{{item.id}}"> {{item.label}}</td>  <!-- ((getRoleMenu[i]==item.id) ? 'checked' : '') -->
+                          </tr>
+                          <tr *ngFor="let sub of menuList[i]['children']; let s =index" [attr.data-index]="s">
+                              <td colspan="6" style="padding-left: 40px;"> <input class="subMenu" id="subMenu-{{sub.sub_id}}" (click)="selectSubMenu($event);" type="checkbox" value="{{sub.sub_id}}"> {{sub.label}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="form-group" style="padding-top: 15px">
+                    	<button type="submit" class="btn btn-primary btn-sm" (click)="update()">Update</button>
+                      <button class="btn btn-danger btn-sm" (click)="back()">Back</button>
+                	</div>
+                </div>
+            </div>
+          </div>
+          <!--/.col-->
+      </div>
+  </div>
+</div>
+
+
+

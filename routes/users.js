@@ -1,11 +1,13 @@
-var express = require('express');
-var router = express.Router();
-
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 //Import the mongoose module
-var mongojs = require('mongojs');
+const config = require('../config/database');
+const User = require('../models/users');
 
 //Set up default mongoose connection
-var db = mongojs('mongodb://angular_crud:angular_crud@ds163806.mlab.com:63806/angular_crud',['users']);
+// var db = mongoose('mongodb://angular_crud:angular_crud@ds163806.mlab.com:63806/angular_crud',['users']);
 /*mongoose.connect(mongoDB, {
   useMongoClient: true
 });
@@ -15,7 +17,30 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;*/
 
 //Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+// Register
+router.post('/register', (req, res, next) => {
+  let newUser = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
+  });
+
+  User.addUser(newUser, (err, user) => {
+    if(err){
+      res.json({success: false, msg:'Failed to register user'});
+    } else {
+      res.json({success: true, msg:'User registered'});
+    }
+  });
+});
+
+// Profile
+router.get('/profile',(req, res, next) => {
+  res.json({user: req.user});
+});
 
 
 /* GET all users listing. */
@@ -26,6 +51,7 @@ router.get('/users', function(req, res, next) {
 		}
 		res.json(users);
 	});
+
 });
 
 /* GET single users. */

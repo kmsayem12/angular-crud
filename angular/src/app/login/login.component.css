@@ -1,0 +1,13 @@
+#brand-logo{
+	margin: -44px;
+    margin-bottom: 14px;
+    background: rgba(10, 128, 185, 0.98);
+    text-align: center;
+}
+#brand-logo img{
+	height: 60px;
+} 
+.help-block {
+	color: red;
+    font-size: 17px;
+}

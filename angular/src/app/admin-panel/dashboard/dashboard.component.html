@@ -1,0 +1,192 @@
+<div id="loding" [ngClass]="{ 'loding-hide': lodingImage }">
+    <img src="assets/img/loding.gif">
+</div>
+<div id="ui-view" [ngClass]="{ 'loding-ui-view': showloding }">
+  <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-block p-3 clearfix">
+                    <i class="fa fa-user-o bg-primary p-3 font-2xl mr-3 float-left"></i>
+                    <div class="text-uppercase text-muted font-weight-bold font-xs mb-0 mt-2">Customer</div>
+                    <div class="h5">{{totalCount.customer}}</div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/customer">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+            
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-block p-3 clearfix">
+                    <i class="fa fa-truck bg-info p-3 font-2xl mr-3 float-left"></i>
+                    <div class="text-uppercase text-muted font-weight-bold font-xs mb-0 mt-2">Supplier</div>
+                    <div class="h5">{{totalCount.supplier}}</div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/supplier">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-block p-3 clearfix">
+                    <i class="fa fa-product-hunt bg-warning p-3 font-2xl mr-3 float-left"></i>
+                    <div class="text-uppercase text-muted font-weight-bold font-xs mb-0 mt-2">Product</div>
+                    <div class="h5">{{totalCount.product}}</div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/product">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-block p-3 clearfix">
+                    <i class="fa fa-users bg-danger p-3 font-2xl mr-3 float-left"></i>
+                    <div class="text-uppercase text-muted font-weight-bold font-xs mb-0 mt-2">User</div>
+                    <div class="h5">{{totalCount.user}}</div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/user">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-block p-4 clearfix">
+                    <i class="fa fa-th-list bg-success p-3 font-2xl mr-3 float-left"></i>
+                    <div class="text-uppercase text-muted font-weight-bold font-xs mb-0 mt-2">Category</div>
+                    <div class="h5">{{totalCount.category}}</div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/category">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header text-white bg-warning">
+                    <div class="font-weight-bold">
+                        <span>Payment</span>
+                        <span class="label pull-right">This Month</span>
+                    </div>
+                </div>
+                <div class="card-block py-0 px-4 b-t-1">
+                    <div class="row">
+                        <div class="col-6 b-r-1 py-3">
+                            <div class="font-weight-bold">{{payment.count}}</div>
+                            <div class="text-muted">
+                                <small>Count</small>
+                            </div>
+                        </div>
+                        <div class="col-6 py-3 text-right">
+                            <div class="font-weight-bold">{{ ((payment.total==null) ? '0.0' : payment.total)}} <small>{{setting.currency}}</small></div>
+                            <div class="text-muted">
+                                <small>Total</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="font-weight-bold">
+                        <span>Sales</span>
+                        <span class="label pull-right">This Month</span>
+                    </div>
+                </div>
+                <div class="card-block py-0 px-4 b-t-1">
+                    <div class="row">
+                        <div class="col-6 b-r-1 py-3">
+                            <div class="font-weight-bold">{{sales.count}}</div>
+                            <div class="text-muted">
+                                <small>Count</small>
+                            </div>
+                        </div>
+                        <div class="col-6 py-3 text-right">
+                            <div class="font-weight-bold">{{((sales.total==null) ? '0.0' : sales.total)}} <small>{{setting.currency}}</small> </div>
+                            <div class="text-muted">
+                                <small>Total</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/sales">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <!--/.col-->
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header text-white bg-danger">
+                    <div class="font-weight-bold">
+                        <span>Purchase</span>
+                        <span class="label pull-right">This Month</span>
+                    </div>
+                </div>
+                <div class="card-block py-0 px-4 b-t-1">
+                    <div class="row">
+                        <div class="col-6 b-r-1 py-3">
+                            <div class="font-weight-bold">{{expense.count}}</div>
+                            <div class="text-muted">
+                                <small>Count</small>
+                            </div>
+                        </div>
+                        <div class="col-6 py-3 text-right">
+                            <div class="font-weight-bold">{{ ((expense.total==null) ? '0.0' : expense.total)}} <small>{{setting.currency}}</small></div>
+                            <div class="text-muted">
+                                <small>Total</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer px-3 py-2">
+                    <a class="font-weight-bold font-xs btn-block text-muted" href="#" routerLink="/purchases">View More <i class="fa fa-angle-right float-right font-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="card">
+          <div class="card-block">
+            <h6 class="card-title">Recent 5 Product</h6>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of lastProduct">
+                    <td>{{item.name}}</td>
+                    <td>{{item.purchase_price}}</td>
+                    <td>{{item.stock_quantity-item.damagedQuantity}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

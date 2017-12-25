@@ -1,0 +1,137 @@
+// Here you can add other styles
+$font-name :   "Roboto", sans-serif;
+$left-nav-bg : #36404a !important;//#181c1f;
+$left-nav-active-bg : #22333c;
+$left-nav-color : #d4c8c8;
+$btn-info-bg:#4dbd74;
+body {
+	font-family: $font-name;
+    font-size: 0.775rem;
+}
+.app-header.navbar {
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    position: fixed;
+    z-index: 1020;
+    width: 100%;
+}
+.app-body{margin-top:55px;}
+
+.app-body .sidebar {flex: 0 0 220px;}
+
+.sidebar .nav {width: 220px;}
+
+.app-header.navbar .navbar-brand {
+    width: 220px;
+    background-color: $left-nav-bg;
+    border-bottom: 0;
+}
+.sidebar .sidebar-nav {width: 220px;}
+.sidebar {
+    background: $left-nav-bg;
+}
+.sidebar-hidden .sidebar {
+    margin-left: -220px;
+}
+.sidebar .nav .nav-item .nav-link.active, .sidebar .nav .nav-item .navbar .active.dropdown-toggle, .navbar .sidebar .nav .nav-item .active.dropdown-toggle {
+    background: $left-nav-active-bg;
+}
+.sidebar .nav .nav-item .nav-link:hover, .sidebar .nav .nav-item .navbar .dropdown-toggle:hover, .navbar .sidebar .nav .nav-item .dropdown-toggle:hover {
+    background: $left-nav-bg;
+}
+.sidebar .nav .nav-item .nav-link, .sidebar .nav .nav-item .navbar .dropdown-toggle, .navbar .sidebar .nav .nav-item .dropdown-toggle {
+    color: $left-nav-color;
+}
+.sidebar .nav .nav-item .nav-link i, .sidebar .nav .nav-item .navbar .dropdown-toggle i, .navbar .sidebar .nav .nav-item .dropdown-toggle i{
+	color: $left-nav-color;
+}
+.sidebar .nav .nav-item .nav-link.active i, .sidebar .nav .nav-item .navbar .active.dropdown-toggle i, .navbar .sidebar .nav .nav-item .active.dropdown-toggle i {
+    color: $left-nav-color;
+}
+.sidebar-fixed .main, .sidebar-fixed .app-footer {
+    margin-left: 220px;
+}
+.nav-dropdown-toggle{cursor:pointer;}
+.nav-dropdown-items a{padding-left: 50px !important;}
+header.navbar .navbar-brand img{
+  height: 56px;
+  margin-top: -10px;
+}
+
+.dropdown-menu-left{left: -15px !important;}
+.card{
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+.card-header-dark {
+    background-color: darkorange;
+    color: #fff;
+}
+.card-block-title{
+    height: 30px;
+    margin-bottom: 5px;
+}
+.card-block-title .card-title{
+    display: inline-block;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+}
+.card-title{
+    color: #434e67!important;
+}
+#loding img{position: fixed;top: 50%;left: 50%;z-index: 100;}
+.loding-hide{display: none;}
+.btn{cursor: pointer;}
+a{text-decoration: none !important;}
+
+.btn-info{color: #fff;background-color: $btn-info-bg;border-color: $btn-info-bg;}
+.btn-info:hover {
+    color: #fff;
+    background-color: #59d483;
+    border-color: $btn-info-bg;
+}
+.btn-info.disabled, .btn-info:disabled{
+    background-color: $btn-info-bg;
+    border-color: $btn-info-bg;
+}
+.main .container-fluid {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.badge {font-size: 90%;}
+table .action .badge{padding: 10px;padding-top: 9px;font-size: 12px;}
+.form-group label span{color: red;}
+#add-product thead{background: darkorange;color: #fff;}
+#add-product td,#add-product th {padding: 5px;}
+tbody td a{color:blue !important;cursor: pointer;}
+fieldset.scheduler-border {
+    border: 1px solid  #c2cfd6 !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+}
+a{cursor:pointer;}
+legend {width: auto;font-size: 1.1rem;}
+.modal-header{padding:10px;}
+.modal-info .modal-header {
+    background-color: darkorange;
+}
+.modal-title {
+    font-size: 1.2rem;
+}
+@media (max-width: 991px) {
+    .dropdown-menu-left{left: -45px !important;}
+    .app-header .navbar-brand {margin-left: -117.5px;}
+}
+@media (max-width: 767px) {
+    table#add-product {width: 600px !important; }
+}
+@media (max-width: 480px){
+    .card-block-title{
+        height: 70px;
+        border-bottom: 1px solid #ccc;
+    }
+    .card-block-title #add_btn {
+        width: 100%;
+    }
+}
