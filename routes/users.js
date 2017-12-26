@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
+// const passport = require('passport');
+// const jwt = require('jsonwebtoken');
 //Import the mongoose module
-const config = require('../config/database');
-const User = require('../models/users');
+// const config = require('../config/database');
+// const User = require('../models/users');
 
 //Set up default mongoose connection
 // var db = mongoose('mongodb://angular_crud:angular_crud@ds163806.mlab.com:63806/angular_crud',['users']);
@@ -21,8 +21,9 @@ var db = mongoose.connection;*/
 
 
 // Register
-router.post('/register', (req, res, next) => {
-  let newUser = new User({
+router.get('/register', (req, res, next) => {
+  res.send('register');
+  /*let newUser = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password
@@ -34,15 +35,48 @@ router.post('/register', (req, res, next) => {
     } else {
       res.json({success: true, msg:'User registered'});
     }
-  });
+  });*/
 });
 
 // Profile
 router.get('/profile',(req, res, next) => {
-  res.json({user: req.user});
+  // res.json({user: req.user});
+  res.send('profile');
 });
 
+// Authenticate
+router.post('/authenticate', (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  console.log(req.body);
+  /*User.getUserByEmail(email, (err, user) => {
+    if(err) throw err;
+    if(!user){
+      return res.json({success: false, msg: 'User not found'});
+    }
 
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        const token = jwt.sign(user, config.secret, {
+          expiresIn: 604800 // 1 week
+        });
+
+        res.json({
+          success: true,
+          token: 'JWT '+token,
+          user: {
+            id: user._id,
+            name: user.name,
+            email: user.email
+          }
+        });
+      } else {
+        return res.json({success: false, msg: 'Wrong password'});
+      }
+    });
+  });*/
+});
 /* GET all users listing. */
 router.get('/users', function(req, res, next) {
 	db.users.find(function(err, users){
