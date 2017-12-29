@@ -21,6 +21,7 @@
     "jsonwebtoken": "*",
     "body-parser": "*",
     "passport": "*",
-    "passport-jwt": "*"
+    "passport-jwt": "*",
+    "ejs": "*"
   }
 }
