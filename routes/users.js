@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const passport = require('passport');
-// const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 //Import the mongoose module
-// const config = require('../config/database');
-// const User = require('../models/users');
+const config = require('../config/database');
+const User = require('../models/users');
 
 //Set up default mongoose connection
 // var db = mongoose('mongodb://angular_crud:angular_crud@ds163806.mlab.com:63806/angular_crud',['users']);
@@ -23,7 +23,7 @@ var db = mongoose.connection;*/
 // Register
 router.get('/register', (req, res, next) => {
   res.send('register');
-  /*let newUser = new User({
+  let newUser = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password
@@ -35,7 +35,7 @@ router.get('/register', (req, res, next) => {
     } else {
       res.json({success: true, msg:'User registered'});
     }
-  });*/
+  });
 });
 
 // Authenticate
