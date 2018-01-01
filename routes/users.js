@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 //Import the mongoose module
 const config = require('../config/database');
 const User = require('../models/users');
-
+const bcrypt = require('bcryptjs');
 //Set up default mongoose connection
 // var db = mongoose('mongodb://angular_crud:angular_crud@ds163806.mlab.com:63806/angular_crud',['users']);
 /*mongoose.connect(mongoDB, {
@@ -48,27 +48,27 @@ router.post('/authenticate', (req, res, next) => {
     if(!user){
       return res.json({success: false, msg: 'User not found'});
     }
-    // console.log(user);
-    User.comparePassword(password, user.password, (err, isMatch) => {
-      if(err) throw err;
-      if(isMatch){
-        const token = jwt.sign(user, config.secret, {
-          expiresIn: 604800 // 1 week
-        });
+    console.log(user);
+	  bcrypt.compare(password, '$2a$10$Aof4F9.TZFXCAGmdDskRSuFwGQ1toVrA7lxSNN.7m8ripA0ZfGiNS', (err, isMatch) => {
+	    if(err) throw err;
+	    if(isMatch){
+	        const token = jwt.sign(user, config.secret, {
+	          expiresIn: 604800 // 1 week
+	        });
 
-        res.json({
-          success: true,
-          token: 'JWT '+token,
-          user: {
-            id: user._id,
-            name: user.name,
-            email: user.email
-          }
-        });
-      } else {
-        return res.json({success: false, msg: 'Wrong password'});
-      }
-    });
+	        res.json({
+	          success: true,
+	          token: 'JWT '+token,
+	          user: {
+	            id: user._id,
+	            name: user.name,
+	            email: user.email
+	          }
+	        });
+	      } else {
+	        return res.json({success: false, msg: 'Wrong password'});
+	      }
+	  });
   });
 });
 
@@ -78,40 +78,6 @@ router.get('/profile',(req, res, next) => {
   res.send('profile');
 });
 
-// Authenticate
-/*router.post('/authenticate', (req, res, next) => {
-
-  const email = req.body.email;
-  const password = req.body.password;
-  
-  User.getUserByEmail(email, (err, user) => {
-    if(err) throw err;
-    if(!user){
-      return res.json({success: false, msg: 'User not found'});
-    }
-    User.comparePassword(password, user.password, (err, isMatch) => {
-
-      if(err) throw err;
-      if(isMatch){
-        const token = jwt.sign(user, config.secret, {
-          expiresIn: 604800 // 1 week
-        });
-
-        res.json({
-          success: true,
-          token: 'JWT '+token,
-          user: {
-            id: user._id,
-            name: user.name,
-            email: user.email
-          }
-        });
-      } else {
-        return res.json({success: false, msg: 'Wrong password'});
-      }
-    });
-  });
-});*/
 /* GET all users listing. */
 router.get('/users', function(req, res, next) {
 	db.users.find(function(err, users){
