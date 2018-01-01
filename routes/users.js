@@ -48,7 +48,7 @@ router.post('/authenticate', (req, res, next) => {
     if(!user){
       return res.json({success: false, msg: 'User not found'});
     }
-
+    // console.log(user);
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
@@ -79,17 +79,18 @@ router.get('/profile',(req, res, next) => {
 });
 
 // Authenticate
-router.post('/authenticate', (req, res, next) => {
+/*router.post('/authenticate', (req, res, next) => {
+
   const email = req.body.email;
   const password = req.body.password;
-  console.log(req.body);
-  /*User.getUserByEmail(email, (err, user) => {
+  
+  User.getUserByEmail(email, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
     }
-
     User.comparePassword(password, user.password, (err, isMatch) => {
+
       if(err) throw err;
       if(isMatch){
         const token = jwt.sign(user, config.secret, {
@@ -109,8 +110,8 @@ router.post('/authenticate', (req, res, next) => {
         return res.json({success: false, msg: 'Wrong password'});
       }
     });
-  });*/
-});
+  });
+});*/
 /* GET all users listing. */
 router.get('/users', function(req, res, next) {
 	db.users.find(function(err, users){

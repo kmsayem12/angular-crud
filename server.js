@@ -32,6 +32,7 @@ app.use(cors()); // cors middleware
 // bodyParser middleware
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // Passport Middleware
 app.use(passport.initialize());
