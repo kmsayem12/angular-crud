@@ -52,7 +52,7 @@ router.post('/authenticate', (req, res, next) => {
 	  bcrypt.compare(password, user._doc.password, (err, isMatch) => {
 	    if(err) throw err;
 	    if(isMatch){
-	        const token = jwt.sign(user, Math.floor(Date.now() / 1000) - 30, {
+	        const token = jwt.sign(user.toObject(), 'alliswell_jwt', {
 	          expiresIn: 604800 // 1 week
 	        });
 
