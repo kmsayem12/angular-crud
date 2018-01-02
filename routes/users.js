@@ -48,11 +48,11 @@ router.post('/authenticate', (req, res, next) => {
     if(!user){
       return res.json({success: false, msg: 'User not found'});
     }
-    console.log(user);
-	  bcrypt.compare(password, '$2a$10$Aof4F9.TZFXCAGmdDskRSuFwGQ1toVrA7lxSNN.7m8ripA0ZfGiNS', (err, isMatch) => {
+    // console.dir(user._doc.password);
+	  bcrypt.compare(password, user._doc.password, (err, isMatch) => {
 	    if(err) throw err;
 	    if(isMatch){
-	        const token = jwt.sign(user, config.secret, {
+	        const token = jwt.sign(user, Math.floor(Date.now() / 1000) - 30, {
 	          expiresIn: 604800 // 1 week
 	        });
 
